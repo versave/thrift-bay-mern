@@ -21,6 +21,10 @@ router.post('/api/users', async (req, res) => {
         const token = await user.generateAuthToken();
         res.status(201).send({ user, token });
     } catch(e) {
+        if(e.message.includes(`password`)) {
+            return res.status(400).send({ message: 'Password too short. Must be 5 or more characters' });
+        }
+
         res.status(400).send({ message: 'User already exists' });
     }
 });
