@@ -6,10 +6,10 @@ const auth = require('../middleware/auth');
 
 const upload = multer({
     limits: {
-        fileSize: 1000000
+        fileSize: 3000000
     },
     fileFilter(req, file, cb) {
-        if(!file.originalname.match(/\.(jpg|jpeg)$/)) {
+        if(!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
             return cb(new Error('Please upload a .png or .jpg file'));
         }
 
@@ -30,7 +30,7 @@ router.post('/api/products', auth, upload.single('product'), async (req, res) =>
         owner: req.user._id,
         ownerName: req.user.name,
         ownerEmail: req.user.email,
-        image: req.file ? req.file.buffer : null
+        image: req.file ? req.file.buffer.toString('base64') : null
     });
 
     try {
@@ -86,7 +86,7 @@ router.patch('/api/products/:id', auth, upload.single('product'), async (req, re
         updates.forEach(update => product[update] = req.body[update]);
         
         if(req.file !== undefined) {
-            product.image = req.file.buffer;
+            product.image = req.file.buffer.toString('base64');
         }
         
         await product.save();

@@ -33,12 +33,11 @@ class Product extends Component {
         );
 
         // Decode and add image
-        let b64encoded;
-        let datajpg;
+        // let b64encoded;
+        let datajpg = null;
         
         if(this.props.image) {
-            b64encoded = btoa(String.fromCharCode.apply(null, this.props.image.data));
-            datajpg = "data:image/jpg;base64," + b64encoded;
+            datajpg = 'data:image/jpg;base64,' + this.props.image;
         }
           
         return (
