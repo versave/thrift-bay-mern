@@ -15,10 +15,12 @@ class Product extends Component {
         user: PropTypes.object
     };
 
-    onDeleteClick = (id) => {
+    onDeleteClick = (id, e) => {
+        e.target.closest('.product').classList.add('disabled')
+
         this.setState({btnClass: 'disabled'});
         this.props.deleteProduct(id);
-    };
+    }
 
     render() {
         const authBtns = (

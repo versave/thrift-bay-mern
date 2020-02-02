@@ -2,6 +2,23 @@
     background: $white;
     box-shadow: 0 5px 7px -3px #697865;
     transition: box-shadow .3s;
+
+    &.disabled {
+        position: relative;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 5;
+            background: #ffffff;
+            transition: opacity .3s;
+            animation: pulse-fade 1s infinite alternate;
+        }
+    }
     
     &:hover {
         box-shadow: 0 5px 7px 1px #697865;
