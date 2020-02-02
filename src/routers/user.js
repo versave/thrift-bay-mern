@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 // @route POST /users
 // @desc Create new user
 // @access Public
-router.post('/users', async (req, res) => {
+router.post('/api/users', async (req, res) => {
     const { name, email, password } = req.body;
     const user = new User(req.body);
 
@@ -28,7 +28,7 @@ router.post('/users', async (req, res) => {
 // @route POST /users/login
 // @desc Login user
 // @access Public
-router.post('/users/login', async (req, res) => {
+router.post('/api/users/login', async (req, res) => {
     const { email, password } = req.body;
 
     // Simple validation
@@ -55,7 +55,7 @@ router.post('/users/login', async (req, res) => {
 // @route POST /users/logout
 // @desc Logout user
 // @access Private
-router.post('/users/logout', auth, async (req, res) => {
+router.post('/api/users/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter(token => {
             return token.token !== req.token;
@@ -71,7 +71,7 @@ router.post('/users/logout', auth, async (req, res) => {
 // @route GET /users/me
 // @desc Get user data
 // @access Private
-router.get('/users/me', auth, async (req, res) => {
+router.get('/api/users/me', auth, async (req, res) => {
     res.send(req.user);
 });
 

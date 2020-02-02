@@ -17,7 +17,7 @@ export const loadUser = () => (dispatch, getState) => {
     // User loading
     dispatch({type: USER_LOADING});
 
-    axios.get('/users/me', tokenConfig(getState))
+    axios.get('/api/users/me', tokenConfig(getState))
         .then(res => dispatch({
             type: USER_LOADED,
             payload: res.data
@@ -42,7 +42,7 @@ export const register = ({ name, email, password }) => dispatch => {
     // Request body
     const body = JSON.stringify({ name, email, password });
 
-    axios.post('/users', body, config)
+    axios.post('/api/users', body, config)
         .then(res => {
             dispatch({type: CALL_LOADED});
 
@@ -71,7 +71,7 @@ export const login = ({ email, password }) => dispatch => {
     // Request body
     const body = JSON.stringify({ email, password });
 
-    axios.post('/users/login', body, config)
+    axios.post('/api/users/login', body, config)
         .then(res => {
             dispatch({type: CALL_LOADED});
 

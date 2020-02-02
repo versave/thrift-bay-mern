@@ -20,7 +20,7 @@ const upload = multer({
 // @route POST /products
 // @desc Create new product
 // @access Private
-router.post('/products', auth, upload.single('product'), async (req, res) => {
+router.post('/api/products', auth, upload.single('product'), async (req, res) => {
     if(!req.body.name || !req.body.price) {
        return res.status(400).send({error: 'Please fill all text fields'}); 
     }
@@ -46,7 +46,7 @@ router.post('/products', auth, upload.single('product'), async (req, res) => {
 // @route GET /products
 // @desc Get all products
 // @access Public
-router.get('/products', (req, res) => {
+router.get('/api/products', (req, res) => {
     Product.find()
         .sort({ createdAt: -1 })
         .then(products => res.send(products));
@@ -55,7 +55,7 @@ router.get('/products', (req, res) => {
 // @route GET /products/:id
 // @desc Get all user products
 // @access Public
-router.get('/products/:id', async (req, res) => {
+router.get('/api/products/:id', async (req, res) => {
     const products = await Product.find({ owner: req.params.id });
     res.send(products);
 });
@@ -63,7 +63,7 @@ router.get('/products/:id', async (req, res) => {
 // @route PATCH /products/:id
 // @desc Edit user product
 // @access Private
-router.patch('/products/:id', auth, upload.single('product'), async (req, res) => {
+router.patch('/api/products/:id', auth, upload.single('product'), async (req, res) => {
     const updates = Object.keys(req.body);
     const allowUpdates = ['name', 'price'];
     const isValidOperation = updates.every(update => allowUpdates.includes(update));
@@ -102,7 +102,7 @@ router.patch('/products/:id', auth, upload.single('product'), async (req, res) =
 // @route DELETE /products/:id
 // @desc Delete user product
 // @access Private
-router.delete('/products/:id', auth, async (req, res) => {
+router.delete('/api/products/:id', auth, async (req, res) => {
     try {
         const product = await Product.findOneAndDelete({ _id: req.params.id, owner: req.user._id });
 

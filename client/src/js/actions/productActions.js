@@ -6,7 +6,7 @@ import { returnErrors } from './errorActions';
 export const getProducts = () => dispatch => {
     dispatch(setProductsLoading());
     
-    axios.get('/products')
+    axios.get('/api/products')
         .then(res => dispatch({
             type: GET_PRODUCTS,
             payload: res.data
@@ -20,7 +20,7 @@ export const getUserProducts = (id) => (dispatch) => {
     dispatch(setProductsLoading());
     dispatch(callLoaded(true));
     
-    axios.get(`/products/${id}`)
+    axios.get(`/api/products/${id}`)
         .then(res => dispatch({
             type: GET_USER_PRODUCTS,
             payload: res.data
@@ -31,7 +31,7 @@ export const getUserProducts = (id) => (dispatch) => {
 };
 
 export const deleteProduct = (id) => (dispatch, getState) => {
-    axios.delete(`/products/${id}`, tokenConfig(getState))
+    axios.delete(`/api/products/${id}`, tokenConfig(getState))
         .then(res => dispatch({
             type: DELETE_PRODUCT,
             payload: id
@@ -47,7 +47,7 @@ export const deleteProduct = (id) => (dispatch, getState) => {
 };
 
 export const addProduct = (product) => (dispatch, getState) => {
-    axios.post('/products', product, tokenConfig(getState))
+    axios.post('/api/products', product, tokenConfig(getState))
         .then(res => {
             dispatch(setProductsLoading());
             dispatch(callLoaded(false));
@@ -63,7 +63,7 @@ export const addProduct = (product) => (dispatch, getState) => {
 };
 
 export const editProduct = (id, edits) => (dispatch, getState) => {
-    axios.patch(`/products/${id}`, edits, tokenConfig(getState))
+    axios.patch(`/api/products/${id}`, edits, tokenConfig(getState))
         .then(res => {
             dispatch(setProductsLoading());
             dispatch(callLoaded(false));
