@@ -1,0 +1,15 @@
+.field {
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid $green;
+
+    @include breakpoint-mobile {
+        font-size: 14px;
+    }
+
+    &::placeholder {
+        opacity: 0.8;
+    }
+}

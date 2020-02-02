@@ -1,0 +1,30 @@
+/* ------------------------------------------------------------ *\
+	Variables
+\* ------------------------------------------------------------ */
+
+/* Font */
+$sans: 'Arial', sans-serif;
+$serif: 'Times New Roman', serif;
+$merri: 'Merriweather', serif;
+
+$gray: #999;
+$red: #cc5861;
+$black: #353a42;
+$green: #697865;
+$light-blue: #8fc1e2;
+$dark-blue: #31708f;
+$white: #f8f9fb;
+
+$font-size-base: 16px;
+$line-height-base: 1.3;
+
+/* Grid */
+$shell-max-width: 1200px;
+$shell-gutter: 33px;
+
+/* Breakpoints */
+$responsive-xxs: 480px;
+$responsive-xs: 767px;
+$responsive-sm: 1023px;
+$responsive-md: 1200px;
+$responsive-lg: 1600px;

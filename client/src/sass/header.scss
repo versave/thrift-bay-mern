@@ -1,0 +1,20 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    transform: translateY(-100%);
+    background: $dark-blue;
+    box-shadow: 0 0 0 0 $green;
+    transition: transform .3s, box-shadow .3s;
+    
+    @include breakpoint-tablet-portrait {
+        transform: translateY(calc(-100% - 40px));
+    }
+
+    &.sticky {
+        transform: translateY(0);
+        box-shadow: 0 0 8px 1px $green;
+    }
+}

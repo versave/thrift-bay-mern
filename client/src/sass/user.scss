@@ -1,0 +1,24 @@
+.user {
+    margin-bottom: 50px;
+    
+    &__head {
+        padding: 50px;
+        margin-bottom: 50px;
+        background: $light-blue;
+        text-align: center;
+
+        h2 {
+            font-size: 32px;
+            color: $white;
+        }
+    }
+    
+    &__body {
+        max-width: 1400px;
+        margin: 0 auto;
+
+        > h3 {
+            margin-bottom: 40px;
+        }
+    }
+}

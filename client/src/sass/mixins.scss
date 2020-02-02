@@ -1,0 +1,43 @@
+/* ------------------------------------------------------------ *\
+  Breakpoints
+\* ------------------------------------------------------------ */
+
+//Media  queries
+@mixin breakpoint-large-desktop {
+    @media (max-width: #{$responsive-lg}) {
+      @content;
+    }
+}
+
+@mixin breakpoint-small-desktop {
+    @media (max-width: #{$responsive-md}) {
+      @content;
+    }
+}
+
+@mixin breakpoint-tablet-portrait {
+    @media (max-width: #{$responsive-sm}) {
+      @content;
+    }
+}
+
+@mixin breakpoint-mobile {
+    @media (max-width: #{$responsive-xs}) {
+      @content;
+    }
+}
+
+@mixin breakpoint-mobile-portrait {
+    @media (max-width: #{$responsive-xxs}) {
+        @content;
+    }
+}
+
+@mixin retina {
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        @content;
+    }
+}
+
+
+

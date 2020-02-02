@@ -1,0 +1,5 @@
+.shell {
+    max-width: calc(#{$shell-max-width} + #{$shell-gutter * 2});
+    padding: 0 $shell-gutter;
+    margin: 0 auto;
+}

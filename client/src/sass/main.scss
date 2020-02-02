@@ -1,0 +1,13 @@
+.main {
+    padding: 0 20px;
+    margin-top: 94px;
+
+    @include breakpoint-tablet-portrait {
+        margin-top: 134px;
+    }
+
+    @include breakpoint-mobile {
+        padding: 0 15px;
+        margin-top: 140px;
+    }
+}
