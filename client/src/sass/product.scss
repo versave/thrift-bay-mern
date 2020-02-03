@@ -30,6 +30,7 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: 50% 50%;
+            background-color: $green;
 
             @include breakpoint-small-desktop {
                 min-height: 230px;

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = new express.Router();
+const sharp = require('sharp');
 const multer = require('multer');
 const Product = require('../models/Product');
 const auth = require('../middleware/auth');
@@ -25,12 +26,18 @@ router.post('/api/products', auth, upload.single('product'), async (req, res) =>
        return res.status(400).send({error: 'Please fill all text fields'}); 
     }
 
+    let buffer = null;
+
+    if(req.file) {
+        buffer = await sharp(req.file.buffer).resize({ width: 300, height: 300 }).png().toBuffer();
+    }
+    
     const product = new Product({
         ...req.body,
         owner: req.user._id,
         ownerName: req.user.name,
         ownerEmail: req.user.email,
-        image: req.file ? req.file.buffer.toString('base64') : null
+        image: buffer
     });
 
     try {
@@ -60,6 +67,24 @@ router.get('/api/products/:id', async (req, res) => {
     res.send(products);
 });
 
+// @route GET /api/products/:id/image
+// @desc Get product image
+// @access Public
+router.get('/api/products/:id/image', async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        
+        if(!product || !product.image) {
+            throw new Error();
+        }
+
+        res.set('Content-Type', 'image/png');
+        res.send(product.image);
+    } catch (e) {
+        res.status(404).send();
+    }
+});
+
 // @route PATCH /products/:id
 // @desc Edit user product
 // @access Private
@@ -78,6 +103,7 @@ router.patch('/api/products/:id', auth, upload.single('product'), async (req, re
 
     try {
         const product = await Product.findOne({ _id: req.params.id, owner: req.user._id });
+        let buffer = null;
         
         if(!product) {
             return res.status(404).send();
@@ -86,7 +112,8 @@ router.patch('/api/products/:id', auth, upload.single('product'), async (req, re
         updates.forEach(update => product[update] = req.body[update]);
         
         if(req.file !== undefined) {
-            product.image = req.file.buffer.toString('base64');
+            buffer = await sharp(req.file.buffer).resize({ width: 300, height: 300 }).png().toBuffer();
+            product.image = buffer;
         }
         
         await product.save();

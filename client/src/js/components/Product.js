@@ -39,7 +39,7 @@ class Product extends Component {
         let datajpg = null;
         
         if(this.props.image) {
-            datajpg = 'data:image/jpg;base64,' + this.props.image;
+            datajpg = `/api/products/${this.props.id}/image`;
         }
           
         return (
