@@ -29,7 +29,7 @@ router.post('/api/products', auth, upload.single('product'), async (req, res) =>
     let buffer = null;
 
     if(req.file) {
-        buffer = await sharp(req.file.buffer).resize({ width: 300, height: 300 }).png().toBuffer();
+        buffer = await sharp(req.file.buffer).resize({ width: 300, height: 300 }).webp().toBuffer();
     }
     
     const product = new Product({
@@ -78,7 +78,7 @@ router.get('/api/products/:id/image', async (req, res) => {
             throw new Error();
         }
 
-        res.set('Content-Type', 'image/png');
+        res.set('Content-Type', 'image/webp');
         res.send(product.image);
     } catch (e) {
         res.status(404).send();
@@ -112,7 +112,7 @@ router.patch('/api/products/:id', auth, upload.single('product'), async (req, re
         updates.forEach(update => product[update] = req.body[update]);
         
         if(req.file !== undefined) {
-            buffer = await sharp(req.file.buffer).resize({ width: 300, height: 300 }).png().toBuffer();
+            buffer = await sharp(req.file.buffer).resize({ width: 300, height: 300 }).webp().toBuffer();
             product.image = buffer;
         }
         
