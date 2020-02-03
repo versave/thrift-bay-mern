@@ -18,18 +18,20 @@ class Content extends Component {
     };
 
     componentDidMount() {
-        if(this.props.product.products.length <= 0 || !this.props.product.loading) {
+        setWindowTop();
+
+        if(this.props.product.products.length <= 0) {
+            this.props.getProducts();
             this.setState({loaded: true})
+
         }      
     }
     
     componentDidUpdate() {
-        setWindowTop();
-
-        if(!this.props.product.loading && !this.props.product.loaded) {
-            this.props.getProducts();
-            this.setState({loaded: this.props.product.loaded})
-        }
+        // if(!this.props.product.loading && !this.props.product.loaded) {
+        //     // this.props.getProducts();
+        //     this.setState({loaded: this.props.product.loaded})
+        // }
     }
 
     render() {

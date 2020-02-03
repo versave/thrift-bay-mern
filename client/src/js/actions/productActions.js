@@ -19,15 +19,11 @@ export const getProducts = () => dispatch => {
 export const getUserProducts = (id) => (dispatch) => {
     dispatch(setProductsLoading());
     dispatch(callLoaded(true));
-    
-    axios.get(`/api/products/${id}`)
-        .then(res => dispatch({
-            type: GET_USER_PRODUCTS,
-            payload: res.data
-        }))
-        .catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status));
-        });
+
+    dispatch({
+        type: GET_USER_PRODUCTS,
+        payload: id
+    });
 };
 
 export const deleteProduct = (id) => (dispatch, getState) => {

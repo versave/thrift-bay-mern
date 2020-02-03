@@ -3,6 +3,7 @@ import { GET_PRODUCTS, GET_USER_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, DELETE_PROD
 const initialState = {
     products: [],
     cachedProducts: [],
+    userProducts: [],
     loading: false,
     loaded: false
 };
@@ -19,7 +20,7 @@ export default function(state = initialState, action) {
         case GET_USER_PRODUCTS:
             return {
                 ...state,
-                products: action.payload,
+                userProducts: state.products.filter(product => product.owner === action.payload),
                 loading: false,
                 loaded: false
             }
