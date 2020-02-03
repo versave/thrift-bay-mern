@@ -37,7 +37,8 @@ router.post('/api/products', auth, upload.single('product'), async (req, res) =>
         owner: req.user._id,
         ownerName: req.user.name,
         ownerEmail: req.user.email,
-        image: buffer
+        image: buffer,
+        hasImage: buffer ? true : false
     });
 
     try {
@@ -57,14 +58,6 @@ router.get('/api/products', (req, res) => {
     Product.find()
         .sort({ createdAt: -1 })
         .then(products => res.send(products));
-});
-
-// @route GET /products/:id
-// @desc Get all user products
-// @access Public
-router.get('/api/products/:id', async (req, res) => {
-    const products = await Product.find({ owner: req.params.id });
-    res.send(products);
 });
 
 // @route GET /api/products/:id/image
@@ -103,6 +96,7 @@ router.patch('/api/products/:id', auth, upload.single('product'), async (req, re
 
     try {
         const product = await Product.findOne({ _id: req.params.id, owner: req.user._id });
+        let productCopy;
         let buffer = null;
         
         if(!product) {
@@ -113,12 +107,20 @@ router.patch('/api/products/:id', auth, upload.single('product'), async (req, re
         
         if(req.file !== undefined) {
             buffer = await sharp(req.file.buffer).resize({ width: 300, height: 300 }).webp().toBuffer();
+            let image64 = req.file.buffer.toString('base64');
+
             product.image = buffer;
+            product.hasImage = true;
+
+            productCopy = {
+                ...product._doc,
+                image64,
+            };
         }
         
         await product.save();
         
-        res.send(product);
+        res.send(productCopy);
     } catch(e) {
         res.status(404).send(e);
     }

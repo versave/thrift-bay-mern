@@ -34,18 +34,19 @@ class Product extends Component {
             <a href={`mailto:${this.props.ownerEmail}`} className="btn">Contact</a>
         );
 
-        // Decode and add image
-        // let b64encoded;
-        let datajpg = null;
-        
-        if(this.props.image) {
-            datajpg = `/api/products/${this.props.id}/image`;
+        // Get image
+        let image = null;
+
+        if(this.props.image && this.props.image64) {
+            image = `data:image/jpg;base64,${this.props.image64}`;
+        } else if(this.props.image) {
+            image = `/api/products/${this.props.id}/image`;
         }
           
         return (
            <div className="product">
                 <div className="product__image">
-                    <figure style={{backgroundImage: `url(${datajpg ? datajpg : 'https://www.cowgirlcontractcleaning.com/wp-content/uploads/sites/360/2018/05/placeholder-img-2.jpg'})`}}></figure>
+                    <figure style={{backgroundImage: `url(${image ? image : 'https://www.cowgirlcontractcleaning.com/wp-content/uploads/sites/360/2018/05/placeholder-img-2.jpg'})`}}></figure>
                 </div>
                 
                 <div className="product__content">

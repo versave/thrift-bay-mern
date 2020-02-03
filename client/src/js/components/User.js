@@ -54,7 +54,8 @@ class User extends Component {
                                         owner={product.owner}
                                         ownerName={product.ownerName}
                                         ownerEmail={product.ownerEmail}
-                                        image={product.image}
+                                        image={product.hasImage}
+                                        image64={product.image64}
                                     />
                                     </div>  
                                 );

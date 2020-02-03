@@ -47,12 +47,11 @@ export default function(state = initialState, action) {
                         Object.keys(editsObject)
                             .forEach(key => {
                                 if(key === 'product') {
-                                    product.image = productObject.image;
+                                    product.image64 = productObject.image64;
                                 } else {
                                     product[key] = editsObject[key];
                                 }
                             });
-                            
                         return product;
                     } else {
                         return product;

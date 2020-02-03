@@ -4,6 +4,10 @@ const productSchema = new mongoose.Schema({
     image: {
         type: Buffer
     },
+    hasImage: {
+        type: Boolean,
+        required: true
+    },
     name: {
         type: String,
         required: true,
@@ -32,6 +36,16 @@ const productSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
+
+// Methods - Accesible on the instances
+productSchema.methods.toJSON = function() {
+    const product = this;
+    const productObject = product.toObject();
+
+    delete productObject.image;
+
+    return productObject;
+};
 
 const Product = mongoose.model('Product', productSchema);
 
