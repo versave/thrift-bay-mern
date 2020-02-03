@@ -26,13 +26,6 @@ class Content extends Component {
 
         }      
     }
-    
-    componentDidUpdate() {
-        // if(!this.props.product.loading && !this.props.product.loaded) {
-        //     // this.props.getProducts();
-        //     this.setState({loaded: this.props.product.loaded})
-        // }
-    }
 
     render() {
         const { products } = this.props.product;
