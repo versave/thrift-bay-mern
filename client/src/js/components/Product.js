@@ -44,7 +44,7 @@ class Product extends Component {
         }
           
         return (
-           <div className="product">
+           <div className="product" style={{animationDelay: `${this.props.animDelay}s`}}>
                 <div className="product__image">
                     <figure style={{backgroundImage: `url(${image ? image : 'https://www.cowgirlcontractcleaning.com/wp-content/uploads/sites/360/2018/05/placeholder-img-2.jpg'})`}}></figure>
                 </div>

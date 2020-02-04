@@ -40,7 +40,7 @@ class Content extends Component {
                     <div className="cols">
                        {
                            this.props.product.loading ? <Loader />
-                           : products.map(product => {
+                           : products.map((product, idx) => {
                                return (
                                    <div key={product._id} className={`col ${product.visible === 'hidden' ? 'hidden' : ''}`}>
                                        <Product
@@ -52,6 +52,7 @@ class Content extends Component {
                                            ownerEmail={product.ownerEmail}
                                            image={product.hasImage}
                                            image64={product.image64}
+                                           animDelay={(idx * .1).toFixed(1)}
                                        />
                                    </div>  
                                );

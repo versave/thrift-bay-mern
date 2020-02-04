@@ -2,3 +2,14 @@
     0% { opacity: .8; }
     100% { opacity: .6; }
 }
+
+@keyframes pop-up-reveal {
+    0% {
+        transform: translateY(150px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

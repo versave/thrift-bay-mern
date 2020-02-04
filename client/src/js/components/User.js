@@ -47,7 +47,7 @@ class User extends Component {
                     <div className="cols">
                         {
                             this.props.product.loading ? <Loader />
-                            : userProducts.map(product => {
+                            : userProducts.map((product, idx) => {
                                 return (
                                     <div key={product._id} className={`col ${product.visible === 'hidden' ? 'hidden' : ''}`}>
                                     <Product
@@ -59,6 +59,7 @@ class User extends Component {
                                         ownerEmail={product.ownerEmail}
                                         image={product.hasImage}
                                         image64={product.image64}
+                                        animDelay={(idx * .1).toFixed(1)}
                                     />
                                     </div>  
                                 );
