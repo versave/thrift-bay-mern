@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Product from './Product';
 import { connect } from 'react-redux';
-import { getProducts, callLoaded } from '../actions/productActions';
+import { getProducts, callLoaded, filterProducts } from '../actions/productActions';
 import PropTypes from 'prop-types';
 import Loader from './Loader';
 import { setWindowTop } from '../utils/functions';
@@ -14,11 +14,13 @@ class Content extends Component {
     static propTypes = {
         getProducts: PropTypes.func.isRequired,
         callLoaded: PropTypes.func.isRequired,
+        filterProducts: PropTypes.func.isRequired,
         product: PropTypes.object
     };
 
     componentDidMount() {
         setWindowTop();
+        this.props.filterProducts('');
 
         if(this.props.product.products.length <= 0) {
             this.props.getProducts();
@@ -67,5 +69,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps,
-    { getProducts, callLoaded })
+    { getProducts, callLoaded, filterProducts })
 (Content);

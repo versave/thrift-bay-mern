@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Product from './Product';
 import Loader from './Loader';
 import { connect } from 'react-redux';
-import { getProducts, getUserProducts } from '../actions/productActions';
+import { getProducts, getUserProducts, filterProducts } from '../actions/productActions';
 import PropTypes from 'prop-types';
 import { setWindowTop } from '../utils/functions';
 
@@ -13,12 +13,15 @@ class User extends Component {
 
     static propTypes = {
         getUserProducts: PropTypes.func.isRequired,
+        filterProducts: PropTypes.func.isRequired,
         product: PropTypes.object,
         user: PropTypes.object
     };
 
     componentDidMount() {
         setWindowTop();
+        this.props.filterProducts('');
+
         this.props.product.products.length <= 0 ? this.props.getProducts(this.state.id) : this.props.getUserProducts(this.state.id);
     }
     
@@ -74,5 +77,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps,
-    { getProducts, getUserProducts })
+    { getProducts, getUserProducts, filterProducts })
 (User);

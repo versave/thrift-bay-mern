@@ -2,7 +2,6 @@ import { GET_PRODUCTS, GET_USER_PRODUCTS, ADD_PRODUCT, EDIT_PRODUCT, DELETE_PROD
 
 const initialState = {
     products: [],
-    cachedProducts: [],
     userProducts: [],
     loading: false,
     loaded: false
