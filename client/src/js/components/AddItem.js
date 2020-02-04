@@ -40,12 +40,33 @@ class AddItem extends Component {
             this.props.history.push('/');
         }
     }
+    
+    validateInput(obj) {
+        return new Promise((resolve, reject) => {
+            Object.keys(obj)
+                .forEach(key => {
+                    if(obj[key] === '') {
+                        reject('Please fill all text fields');
+                    } else if(key === 'image' && obj[key] !== null) {
+                        if(!obj[key].type.match(/\/(jpg|jpeg|png)$/)) {
+                            reject('File format must be .jpg, .jpeg or .png');
+                        } else if(obj[key].size > 3000000){
+                            reject('File size too large. Must be under 3mb.');
+                        }
+                    }
+                });
+
+            resolve();
+        });
+    }
 
     onChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
-        
+        if(e.target.type !== 'file') {
+            this.setState({ [e.target.name]: e.target.value });
+        }
+
         // Set image to state and file uploader background
-        if(e.target.type === 'file') {
+        if(e.target.type === 'file' && e.target.files[0] !== undefined) {
             this.setState({ image: e.target.files[0], imageName: e.target.files[0].name });
 
             const reader = new FileReader();
@@ -68,16 +89,23 @@ class AddItem extends Component {
             image: this.state.image
         };
 
-        const formData = new FormData();
+        console.log(product)
 
-        formData.append('name', product.name);
-        formData.append('price', product.price);
-        formData.append('product', product.image);
-
-        // Add product via addProduct action
-        this.props.addProduct(formData);
-
-        this.setState({loading: true});
+        this.validateInput(product).then(() => {
+            const formData = new FormData();
+    
+            formData.append('name', product.name);
+            formData.append('price', product.price);
+            formData.append('product', product.image);
+    
+            // Add product via addProduct action
+            this.setState({loading: true});
+            
+            this.props.addProduct(formData);
+        })
+        .catch(e => {
+            this.setState({ msg: e });
+        })
     }
 
     render() {

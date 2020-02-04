@@ -39,13 +39,31 @@ class EditItem extends Component {
             // Route back to home
             this.props.history.push('/');
         }
-    } 
+    }
+
+    validateInput({ name, price, image }) {
+        return new Promise((resolve, reject) => {
+            if(name === '' & price === '' && image === null) {
+                reject('Please make at least one change in order to submit');
+
+            } else if(image !== null) {
+                if(!image.type.match(/\/(jpg|jpeg|png)$/)) {
+                    reject('File format must be .jpg, .jpeg or .png');
+                } else if(image.size > 3000000){
+                    reject('File size too large. Must be under 3mb.');
+                }
+            }
+            resolve();
+        });
+    }
 
     onChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+        if(e.target.type !== 'file') {
+            this.setState({ [e.target.name]: e.target.value });
+        }
         
         // Set image to state and file uploader background
-        if(e.target.type === 'file') {
+        if(e.target.type === 'file' && e.target.files[0] !== undefined) {
             this.setState({ image: e.target.files[0], imageName: e.target.files[0].name });
 
             const reader = new FileReader();
@@ -67,20 +85,25 @@ class EditItem extends Component {
             image: this.state.image
         };
 
-        const id = this.props.match.params.id;
-        const updates = Object.keys(allowedEdits);
-        const formData = new FormData();
+        this.validateInput(allowedEdits).then(() => {
+            const id = this.props.match.params.id;
+            const updates = Object.keys(allowedEdits);
+            const formData = new FormData();
 
-        updates.forEach(update => {
-            if(allowedEdits[update] !== '' && allowedEdits[update] !== null) {
-                update === 'image' ? formData.append('product', allowedEdits[update]) : formData.append(update, allowedEdits[update]);
-            }
+            updates.forEach(update => {
+                if(allowedEdits[update] !== '' && allowedEdits[update] !== null) {
+                    update === 'image' ? formData.append('product', allowedEdits[update]) : formData.append(update, allowedEdits[update]);
+                }
+            })
+
+            // Edit product via editProducts action
+            this.setState({loading: true});
+            
+            this.props.editProduct(id, formData);
         })
-
-        // Edit product via editProducts action
-        this.props.editProduct(id, formData);
-
-        this.setState({loading: true});
+        .catch(e => {
+            this.setState({ msg: e });
+        });
     }
     
     render() {
