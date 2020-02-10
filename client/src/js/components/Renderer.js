@@ -15,9 +15,25 @@ import Loader from './Loader';
 import PrivateRoute from './PrivateRoute';
 
 class Renderer extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            domLoaded: false
+        }
+
+        this.setDomLoaded();
+    }
+
     static propTypes = {
         user: PropTypes.object.isRequired
     };
+
+    setDomLoaded() {
+        window.addEventListener('load', () => {
+            this.setState({ domLoaded: true });
+        });
+    }
 
     render() {
         const fragment = (
@@ -45,7 +61,7 @@ class Renderer extends Component {
         );
 
         return (
-            !this.props.user.isLoading ? fragment : <Loader addClass="loader--fixed" />
+            !this.props.user.isLoading && this.state.domLoaded ? fragment : <Loader addClass="loader--fixed" />
         );
     }
 }
