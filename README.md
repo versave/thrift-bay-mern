@@ -1,4 +1,4 @@
-# Thrifht Bay Project
+# Thrift Bay Project
 Stack: MERN with React Router
 
 ## Preview
